@@ -15,7 +15,7 @@ Run
 
     # python setup.py install
 
-N.B.: the `#` means that you must be root!
+**N.B.:** the `#` means that you must be root!
 
 Features
 --------

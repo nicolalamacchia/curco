@@ -98,7 +98,7 @@ if '--help' in sys.argv:
 cur_from = None
 cur_to = None
 
-amount_re = re.findall(r"\d+\.\d*|\.\d+|\d+", ' '.join(sys.argv))
+amount_re = re.findall(r"\d+\.\d*|\.\d+|\d+", ' '.join(sys.argv[1:]))
 if amount_re:
     amount = amount_re[0]
     format_str = "{0} {1} = {2} {3}"
@@ -132,7 +132,7 @@ if (val_id in cache_rates_dict and
     conv_val = str(float(rate) * float(amount))
     output(amount, cur_from, conv_val, cur_to, rate)
 else:
-    URL = "http://rate-exchange.appspot.com/currency?{}"
+    URL = "http://rate-exchange.appspot.com/currency?{0}"
     params = urlencode({"from": cur_from, "to": cur_to, "q": amount})
     # Need .decode('utf-8') for python 3 compatibility
     res = urlopen(URL.format(params)).read().decode('utf-8')
