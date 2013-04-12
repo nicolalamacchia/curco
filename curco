@@ -26,6 +26,26 @@ try:
 except ImportError:
     import pickle               # noqa
 
+USAGE = """curco: [--help] [--vein] CONVERSION
+
+A dummy currency converter.  Takes exchange rates from
+http://rate-exchange.appspot.com/ (based on Google's API)
+
+Write the CONVERSION argument in a natural way:
+    $ curco 10$ to eur
+or
+    $ curco USD to A$
+or
+    $ curco 5000.00 cad to jpy
+and so on.
+
+Conversions are cached for 3 hours (by default).
+
+Options:
+    --help      show this
+    --vein      update the cache
+"""
+
 CURRENCIES = ["AED", "ANG", "ARS", "AUD", "BGN", "BHD", "BND", "BOB", "BRL",
               "BWP", "CAD", "CHF", "CLP", "CNY", "COP", "CRC", "CZK", "DKK",
               "DOP", "DZD", "EEK", "EGP", "EUR", "FJD", "GBP", "HKD", "HNL",
@@ -66,6 +86,15 @@ def output(amount, from_, to, value, rate):
     sys.stdout.write('\n')
     sys.stdout.flush()
 
+if not sys.argv[1:]:
+    sys.argv += sys.stdin.read().split()
+
+if '--help' in sys.argv:
+    sys.stdout.write(USAGE)
+    sys.stdout.write('\n')
+    sys.stdout.flush()
+    sys.exit(0)
+
 cur_from = None
 cur_to = None
 
@@ -83,6 +112,7 @@ cur_to = find_cur_code()
 
 if not cur_from or not cur_to or cur_from == cur_to:
     sys.stderr.write("Insert valid currency codes\n")
+    sys.stderr.write("Use '--help' for help\n")
     sys.stderr.flush()
     sys.exit(1)
 
