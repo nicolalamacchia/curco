@@ -89,7 +89,12 @@ def output(amount, format_str, from_, to, value, rate):
 
 def main():
     if not sys.argv[1:]:
-        sys.argv += sys.stdin.read().split()
+        try:
+            sys.argv += sys.stdin.read().split()
+        except KeyboardInterrupt:
+            sys.stderr.write("\nKeyboard interrupt received, exiting...\n")
+            sys.stderr.flush()
+            sys.exit(1)
 
     if "--help" in sys.argv:
         sys.stdout.write(USAGE)
