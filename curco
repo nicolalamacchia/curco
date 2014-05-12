@@ -8,6 +8,7 @@ import re
 import sys
 import json
 import time
+from signal import signal, SIGPIPE, SIG_DFL
 
 # Python 2-3 compatibility
 try:
@@ -88,6 +89,8 @@ def output(amount, format_str, from_, to, value, rate):
 
 
 def main():
+    # Ignore BrokenPipeError
+    signal(SIGPIPE, SIG_DFL)
     if not sys.argv[1:]:
         try:
             sys.argv += sys.stdin.read().split()
