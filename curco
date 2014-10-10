@@ -78,7 +78,7 @@ def find_cur_code():
 
 
 def h2s(h):
-    """ Convert hours to seconds"""
+    """Convert hours to seconds"""
     return h * 60**2
 
 
